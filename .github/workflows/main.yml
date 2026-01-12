@@ -1,4 +1,4 @@
-name: Run Existing Test
+name: Run testslab6 Tests
 
 on: [push, pull_request]
 
@@ -14,11 +14,11 @@ jobs:
       with:
         python-version: '3.11'
     
-    - name: Install dependencies
+    - name: Install base dependencies
       run: |
         pip install pytest
     
-    - name: Run base test
+    - name: Run testslab6 tests
       run: |
-        cd testslab9/testslab3
-        pytest tests/test_login.py::test_browser_initialization_and_close -v
+        cd testslab9/testslab6
+        pytest -v
