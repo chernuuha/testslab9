@@ -16,15 +16,12 @@ jobs:
         with:
           submodules: false
 
-      - name: Enter testslab9 directory
-        run: cd testslab9 && pwd
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install common Python dependencies
+      - name: Install dependencies
         run: |
           pip install --upgrade pip
           if [ -f testslab9/requirements.txt ]; then
@@ -33,11 +30,12 @@ jobs:
 
       - name: Run Python tests
         run: |
+          cd testslab9
           for folder in testslab[2-9]; do
-            if [ -d "testslab9/$folder" ]; then
+            if [ -d "$folder" ]; then
               echo "=== Running tests in $folder ==="
-              cd "testslab9/$folder"
+              cd "$folder"
               pytest -v --tb=short
-              cd ../..
+              cd ..
             fi
           done
