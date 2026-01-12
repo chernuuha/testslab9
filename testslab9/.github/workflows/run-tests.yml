@@ -1,0 +1,100 @@
+name: Run All Autotests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ======================
+      # JavaScript: testslab1
+      # ======================
+      - name: Set up Node.js for testslab1
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install and run testslab1 tests
+        run: |
+          cd testslab1
+          npm ci
+          npm test
+
+      # ======================
+      # JavaScript: testslab8
+      # ======================
+      - name: Set up Node.js for testslab8
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Run testslab8 script
+        run: |
+          cd testslab8
+          if [ -f script.js ]; then
+            node script.js
+          else
+            echo "No script.js found in testslab8"
+          fi
+
+      # ======================
+      # Python projects
+      # ======================
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install common Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # --- testslab2 ---
+      - name: Run testslab2 (API tests)
+        run: |
+          cd testslab2
+          pytest -v
+
+      # --- testslab3 (Selenium) ---
+      - name: Install Chromium for Selenium
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
+
+      - name: Run testslab3 (UI tests)
+        run: |
+          cd testslab3
+          pytest -v --tb=short
+
+      # --- testslab4 ---
+      - name: Run testslab4 (unit tests)
+        run: |
+          cd testslab4
+          pytest -v
+
+      # --- testslab5 ---
+      - name: Run testslab5 (users API)
+        run: |
+          cd testslab5
+          pytest -v
+
+      # --- testslab6 ---
+      - name: Run testslab6 (calculator)
+        run: |
+          cd testslab6
+          pytest -v
+
+      # --- testslab7 ---
+      - name: Run testslab7 (negative tests)
+        run: |
+          cd testslab7
+          pytest -v
