@@ -24,13 +24,15 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          if [ -f testslab9/requirements.txt ]; then
-            pip install -r testslab9/requirements.txt
+          if [ -f testslab9/testslab9/requirements.txt ]; then
+            pip install -r testslab9/testslab9/requirements.txt
+          else
+            pip install pytest requests selenium
           fi
 
       - name: Run Python tests
         run: |
-          cd testslab9
+          cd testslab9/testslab9
           for folder in testslab[2-9]; do
             if [ -d "$folder" ]; then
               echo "=== Running tests in $folder ==="
