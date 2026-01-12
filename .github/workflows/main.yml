@@ -1,4 +1,4 @@
-name: Run Single Test Project
+name: Run Single Basic Test
 
 on: [push, pull_request]
 
@@ -16,9 +16,11 @@ jobs:
     
     - name: Install dependencies
       run: |
-        pip install pytest
+        pip install pytest selenium webdriver-manager
     
-    - name: Run tests from testslab5
+    - name: Run single test
       run: |
-        cd testslab9/testslab5
-        pytest test_sample.py
+        cd testslab9/testslab3
+        pytest tests/test_login.py::test_browser_initialization_and_close --headless
+      env:
+        HEADLESS: "true"
