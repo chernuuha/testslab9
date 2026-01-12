@@ -13,18 +13,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          submodules: false
 
-      # Перейдём в папку testslab9 — там лежат все тесты
       - name: Enter testslab9 directory
         run: cd testslab9 && pwd
 
-      # --- Установка Python ---
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      # --- Установка общих зависимостей ---
       - name: Install common Python dependencies
         run: |
           pip install --upgrade pip
@@ -32,7 +31,6 @@ jobs:
             pip install -r testslab9/requirements.txt
           fi
 
-      # --- Запуск Python-тестов (testslab2 — testslab9) ---
       - name: Run Python tests
         run: |
           for folder in testslab[2-9]; do
