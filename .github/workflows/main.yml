@@ -1,4 +1,4 @@
-name: Run testslab6 Tests
+name: Run Real Tests
 
 on: [push, pull_request]
 
@@ -14,11 +14,30 @@ jobs:
       with:
         python-version: '3.11'
     
-    - name: Install base dependencies
+    - name: Install ALL dependencies
       run: |
-        pip install pytest
+        pip install pytest selenium webdriver-manager
     
-    - name: Run testslab6 tests
+    - name: Find and run existing tests
       run: |
-        cd testslab9/testslab6
+        cd testslab9
+        # Ищем все тестовые файлы в репозитории
+        TEST_FILES=$(find . -name "test_*.py" -type f)
+        
+        if [ -z "$TEST_FILES" ]; then
+          echo " ERROR: No test files found in repository!"
+          echo "=== Repository structure ==="
+          ls -laR
+          exit 1
+        fi
+        
+        echo " Found test files:"
+        echo "$TEST_FILES"
+        
+        # Запускаем первый найденный тестовый файл
+        FIRST_TEST=$(echo "$TEST_FILES" | head -1)
+        echo " Running: $FIRST_TEST"
+        
+        # Переходим в директорию теста и запускаем
+        cd "$(dirname "$FIRST_TEST")"
         pytest -v
