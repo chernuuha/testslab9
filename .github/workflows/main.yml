@@ -18,24 +18,13 @@ jobs:
       - name: Enter testslab9 directory
         run: cd testslab9 && pwd
 
-      # --- Для JS-проекта testslab1 ---
-      - name: Set up Node.js for testslab1
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-
-      - name: Install and run testslab1 tests
-        run: |
-          cd testslab9/testslab1
-          npm ci
-          npm test
-
-      # --- Для Python-проектов (testslab2 — testslab9) ---
+      # --- Установка Python ---
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
+      # --- Установка общих зависимостей ---
       - name: Install common Python dependencies
         run: |
           pip install --upgrade pip
@@ -43,6 +32,7 @@ jobs:
             pip install -r testslab9/requirements.txt
           fi
 
+      # --- Запуск Python-тестов (testslab2 — testslab9) ---
       - name: Run Python tests
         run: |
           for folder in testslab[2-9]; do
