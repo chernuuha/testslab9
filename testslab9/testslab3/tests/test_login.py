@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
-BASE_URL = "http://localhost:5000"
+BASE_URL = "https://httpbin.org"
 
 @pytest.fixture(scope="module")
 def browser():
