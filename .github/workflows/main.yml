@@ -1,4 +1,4 @@
-name: Run Single Basic Test
+name: Run Existing Test
 
 on: [push, pull_request]
 
@@ -16,11 +16,9 @@ jobs:
     
     - name: Install dependencies
       run: |
-        pip install pytest selenium webdriver-manager
+        pip install pytest
     
-    - name: Run single test
+    - name: Run base test
       run: |
         cd testslab9/testslab3
-        pytest tests/test_login.py::test_browser_initialization_and_close --headless
-      env:
-        HEADLESS: "true"
+        pytest tests/test_login.py::test_browser_initialization_and_close -v
