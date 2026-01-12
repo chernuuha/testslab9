@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          if [ -f requirements.txt ]; then
+          if [ -f testslab9/requirements.txt ]; then
             pip install -r requirements.txt
           else
             pip install pytest requests selenium
